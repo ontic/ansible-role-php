@@ -20,7 +20,6 @@
       - name: php5-imagick
       - name: php5-imap
       - name: php5-intl
-      - name: php5-json
       - name: php5-ldap
       - name: php5-mcrypt
       - name: php5-mysql
