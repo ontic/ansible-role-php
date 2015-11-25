@@ -1,0 +1,102 @@
+# This source file is subject to the (Open Source Initiative) BSD license
+# that is bundled with this package in the LICENSE file. It is also available
+# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
+# If you did not receive a copy of the license and are unable to obtain it through
+# the world-wide-web, please send an email to license@ontic.com.au immediately.
+# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+
+---
+
+- name: PHP | Debian | Add APT repository.
+  sudo: yes
+  apt_repository:
+    repo: '{{ php_repository }}'
+    update_cache: yes
+  when: ansible_os_family == 'Debian' and php_repository
+  tags:
+    - package
+    - php
+
+- name: PHP | Debian | Install PHP packages.
+  sudo: yes
+  apt:
+    name: '{{ item.name }}'
+    cache_valid_time: '{{ item.cache_valid_time | default(600) }}'
+    deb: '{{ item.deb | default(omit) }}'
+    default_release: '{{ item.default_release | default(omit) }}'
+    dpkg_options: '{{ item.dpkg_options | default(omit) }}'
+    force: '{{ item.force | default(omit) }}'
+    install_recommends: '{{ item.install_recommends | default(omit) }}'
+    purge: '{{ item.purge | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    update_cache: '{{ item.update_cache | default("yes") }}'
+    upgrade: '{{ item.upgrade | default(omit) }}'
+  notify:
+    - restart php-fpm
+    - restart web server
+  with_items: php_packages
+  when: ansible_os_family == 'Debian'
+  tags:
+    - package
+    - php
+
+- name: PHP | RedHat | Install EPEL repo.
+  yum:
+    name: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm'
+    state: present
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - package
+    - php
+
+- name: PHP | RedHat | Import EPEL GPG key.
+  rpm_key:
+    key: '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}'
+    state: present
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - package
+    - php
+
+- name: PHP | RedHat | Install PHP packages.
+  sudo: yes
+  yum:
+    name: '{{ item.name }}'
+    conf_file: '{{ item.conf_file | default(omit) }}'
+    disable_gpg_check: '{{ item.disable_gpg_check | default(omit) }}'
+    disablerepo: '{{ item.disablerepo | default(omit) }}'
+    enablerepo: '{{ item.enablerepo | default(omit) }}'
+    exclude: '{{ item.exclude | default(omit) }}'
+    list: '{{ item.list | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    update_cache: '{{ item.update_cache | default("yes") }}'
+  notify:
+    - restart php-fpm
+    - restart web server
+  with_items: php_packages
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - package
+    - php
+
+- name: PHP | Install PECL extensions.
+  shell: echo "\n\n" | pecl install {{ item.name }}
+  register: php_pecl_install
+  changed_when: php_pecl_install.stdout.find('already installed') == -1
+  failed_when: php_pecl_install.stdout.find('ERROR') != -1
+  with_items: php_pecl_extensions
+  when: php_pecl_extensions and item.state | default('present') == 'present'
+  tags:
+    - package
+    - php
+
+- name: PHP | Uninstall PECL extensions.
+  shell: echo "\n\n" | pecl uninstall {{ item.name }}
+  register: php_pecl_uninstall
+  changed_when: php_pecl_install.stdout.find('not installed') == -1
+  failed_when: php_pecl_install.stdout.find('ERROR') != -1
+  with_items: php_pecl_extensions
+  when: php_pecl_extensions and item.state | default('present') == 'absent'
+  tags:
+    - package
+    - php

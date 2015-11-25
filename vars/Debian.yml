@@ -1,0 +1,40 @@
+# This source file is subject to the (Open Source Initiative) BSD license
+# that is bundled with this package in the LICENSE file. It is also available
+# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
+# If you did not receive a copy of the license and are unable to obtain it through
+# the world-wide-web, please send an email to license@ontic.com.au immediately.
+# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+
+---
+
+php_default_packages:
+  - name: php5
+  - name: php5-cli
+  - name: php5-common
+  - name: php5-curl
+  - name: php5-dev
+  - name: php5-fpm
+  - name: php5-gd
+  - name: php5-imagick
+  - name: php5-imap
+  - name: php5-intl
+  - name: php5-json
+  - name: php5-ldap
+  - name: php5-mcrypt
+  - name: php5-mongo
+  - name: php5-mysql
+  - name: php-pear
+  - name: php5-readline
+  - name: php5-redis
+  - name: php5-tidy
+  - name: php5-xdebug
+  - name: php5-xmlrpc
+  - name: php5-xsl
+
+php_fpm_service_name: php5-fpm
+php_fpm_conf_file: /etc/php5/fpm/php-fpm.conf
+php_fpm_pid_file: /var/run/php5-fpm.pid
+php_fpm_error_log: /var/log/php5-fpm.log
+php_fpm_pool_path: /etc/php5/fpm/pool.d
+php_ini_file: "{{ '/etc/php5/fpm/php.ini' if php_fpm_pkg_state != 'absent' else '/etc/php5/apache2/php.ini' }}"
+php_cli_ini_file: /etc/php5/cli/php.ini

@@ -1,0 +1,40 @@
+# This source file is subject to the (Open Source Initiative) BSD license
+# that is bundled with this package in the LICENSE file. It is also available
+# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
+# If you did not receive a copy of the license and are unable to obtain it through
+# the world-wide-web, please send an email to license@ontic.com.au immediately.
+# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+
+---
+
+php_default_packages:
+  - name: php
+  - name: php-cli
+  - name: php-common
+  - name: php-curl
+  - name: php-devel
+  - name: php-fpm
+  - name: php-gd
+  - name: ImageMagick
+  - name: php-imap
+  - name: php-intl
+  - name: php-json
+  - name: php-ldap
+  - name: php-mcrypt
+  - name: php-mongo
+  - name: php-mysql
+  - name: php-pear
+  - name: php-readline
+  - name: php-redis
+  - name: php-tidy
+  - name: php-xdebug
+  - name: php-xmlrpc
+  - name: php-xsl
+
+php_fpm_service_name: php-fpm
+php_fpm_conf_file: /etc/php-fpm.conf
+php_fpm_pid_file: /var/run/php-fpm/php-fpm.pid
+php_fpm_error_log: /var/log/php-fpm/error.log
+php_fpm_pool_path: /etc/php-fpm.d
+php_ini_file: /etc/php.ini
+php_cli_ini_file: /etc/php-cli.ini

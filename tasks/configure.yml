@@ -1,0 +1,109 @@
+# This source file is subject to the (Open Source Initiative) BSD license
+# that is bundled with this package in the LICENSE file. It is also available
+# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
+# If you did not receive a copy of the license and are unable to obtain it through
+# the world-wide-web, please send an email to license@ontic.com.au immediately.
+# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+
+---
+
+- name: PHP | RedHat | Create separate PHP-CLI ini file.
+  command: 'cp {{ php_ini_file }} {{ php_cli_ini_file }}'
+  args:
+    creates: '{{ php_cli_ini_file }}'
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - configure
+    - php
+
+- name: PHP | RedHat | Configure global PHP-CLI execution.
+  sudo: yes
+  template:
+    src: 'php-cli-ini.sh.j2'
+    dest: '/etc/profile.d/php-cli-ini.sh'
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - configure
+    - php
+
+- name: PHP | Configure present PHP-FPM pool files.
+  sudo: yes
+  template:
+    src: '{{ item.template }}'
+    dest: '{{ php_fpm_pool_path }}/{{ item.name }}.conf'
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart php-fpm
+  with_items: php_fpm_pool_templates
+  when: php_fpm_pool_templates and item.state | default('present') != 'absent'
+  tags:
+    - configure
+    - php
+
+- name: PHP | Configure absent PHP-FPM pool files.
+  sudo: yes
+  file:
+    path: '{{ php_fpm_pool_path }}/{{ item.name }}.conf'
+    state: absent
+  notify: restart php-fpm
+  with_items: php_fpm_pool_templates
+  when: php_fpm_pool_templates and item.state | default('present') == 'absent'
+  tags:
+    - configure
+    - nginx
+
+- name: PHP | Configure PHP-FPM conf file.
+  sudo: yes
+  template:
+    src: '{{ php_fpm_conf_template }}'
+    dest: '{{ php_fpm_conf_file }}'
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart php-fpm
+  tags:
+    - configure
+    - php
+
+- name: PHP | Configure properties in PHP ini file.
+  sudo: yes
+  ini_file:
+    dest: '{{ php_ini_file }}'
+    section: '{{ item.section }}'
+    option: '{{ item.option | default(omit) }}'
+    value: '{{ item.value | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    backup: yes
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart php-fpm
+    - restart web server
+  with_items: php_ini
+  when: php_ini
+  tags:
+    - configure
+    - php
+
+- name: PHP | Configure properties in PHP-CLI ini file.
+  sudo: yes
+  ini_file:
+    dest: '{{ php_cli_ini_file }}'
+    section: '{{ item.section }}'
+    option: '{{ item.option | default(omit) }}'
+    value: '{{ item.value | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    backup: yes
+    owner: root
+    group: root
+    mode: 0644
+  with_items: php_cli_ini
+  when: php_cli_ini
+  tags:
+    - configure
+    - php
