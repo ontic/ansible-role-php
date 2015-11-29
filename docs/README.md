@@ -25,7 +25,6 @@ php_packages:
   - name: php5-imagick
   - name: php5-imap
   - name: php5-intl
-  - name: php5-json
   - name: php5-ldap
   - name: php5-mcrypt
   - name: php5-mongo
@@ -125,14 +124,10 @@ If the value remains omitted, the following packages will be installed by defaul
 | php5-imagick           |  ImageMagick            |
 | php5-imap              |  php-imap               |
 | php5-intl              |  php-intl               |
-| php5-json              |  php-json               |
 | php5-ldap              |  php-ldap               |
 | php5-mcrypt            |  php-mcrypt             |
-| php5-mongo             |  php-mongo              |
 | php5-mysql             |  php-mysql              |
 | php-pear               |  php-pear               |
-| php5-readline          |  php-readline           |
-| php5-redis             |  php-redis              |
 | php5-tidy              |  php-tidy               |
 | php5-xdebug            |  php-xdebug             |
 | php5-xmlrpc            |  php-xmlrpc             |

@@ -7,35 +7,12 @@
 
 ---
 
-- name: PHP | Debian | Add APT repository.
+- name: PHP | Debian | Add launchpad PPA.
   sudo: yes
   apt_repository:
-    repo: '{{ php_repository }}'
+    repo: '{{ php_ppa }}'
     update_cache: yes
-  when: ansible_os_family == 'Debian' and php_repository
-  tags:
-    - package
-    - php
-
-- name: PHP | Debian | Install PHP packages.
-  sudo: yes
-  apt:
-    name: '{{ item.name }}'
-    cache_valid_time: '{{ item.cache_valid_time | default(600) }}'
-    deb: '{{ item.deb | default(omit) }}'
-    default_release: '{{ item.default_release | default(omit) }}'
-    dpkg_options: '{{ item.dpkg_options | default(omit) }}'
-    force: '{{ item.force | default(omit) }}'
-    install_recommends: '{{ item.install_recommends | default(omit) }}'
-    purge: '{{ item.purge | default(omit) }}'
-    state: '{{ item.state | default(omit) }}'
-    update_cache: '{{ item.update_cache | default("yes") }}'
-    upgrade: '{{ item.upgrade | default(omit) }}'
-  notify:
-    - restart php-fpm
-    - restart web server
-  with_items: php_packages
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and php_ppa
   tags:
     - package
     - php
@@ -44,6 +21,7 @@
   yum:
     name: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm'
     state: present
+  register: php_epel_repo
   when: ansible_os_family == 'RedHat'
   tags:
     - package
@@ -53,7 +31,31 @@
   rpm_key:
     key: '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}'
     state: present
+  register: php_epel_key
   when: ansible_os_family == 'RedHat'
+  tags:
+    - package
+    - php
+
+- name: PHP | Debian | Install PHP packages.
+  sudo: yes
+  apt:
+    name: '{{ item.name if item.version is not defined else item.name + "=" + item.version }}'
+    cache_valid_time: '{{ item.cache_valid_time | default(omit) }}'
+    deb: '{{ item.deb | default(omit) }}'
+    default_release: '{{ item.default_release | default(omit) }}'
+    dpkg_options: '{{ item.dpkg_options | default(omit) }}'
+    force: '{{ item.force | default(omit) }}'
+    install_recommends: '{{ item.install_recommends | default(omit) }}'
+    purge: '{{ item.purge | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    update_cache: '{{ item.update_cache | default(omit) }}'
+    upgrade: '{{ item.upgrade | default(omit) }}'
+  notify:
+    - restart php-fpm
+    - restart web server
+  with_items: php_packages
+  when: ansible_os_family == 'Debian' and php_packages
   tags:
     - package
     - php
@@ -61,7 +63,7 @@
 - name: PHP | RedHat | Install PHP packages.
   sudo: yes
   yum:
-    name: '{{ item.name }}'
+    name: '{{ item.name if item.version is not defined else item.name + "-" + item.version }}'
     conf_file: '{{ item.conf_file | default(omit) }}'
     disable_gpg_check: '{{ item.disable_gpg_check | default(omit) }}'
     disablerepo: '{{ item.disablerepo | default(omit) }}'
@@ -69,18 +71,18 @@
     exclude: '{{ item.exclude | default(omit) }}'
     list: '{{ item.list | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
-    update_cache: '{{ item.update_cache | default("yes") }}'
+    update_cache: '{{ php_epel_repo.changed or php_epel_key.changed or item.update_cache | default(omit) }}'
   notify:
     - restart php-fpm
     - restart web server
   with_items: php_packages
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and php_packages
   tags:
     - package
     - php
 
 - name: PHP | Install PECL extensions.
-  shell: echo "\n\n" | pecl install {{ item.name }}
+  shell: echo yes \"\" | pecl install {{ item.name }}
   register: php_pecl_install
   changed_when: php_pecl_install.stdout.find('already installed') == -1
   failed_when: php_pecl_install.stdout.find('ERROR') != -1
@@ -91,7 +93,7 @@
     - php
 
 - name: PHP | Uninstall PECL extensions.
-  shell: echo "\n\n" | pecl uninstall {{ item.name }}
+  shell: echo yes \"\" | pecl uninstall {{ item.name }}
   register: php_pecl_uninstall
   changed_when: php_pecl_install.stdout.find('not installed') == -1
   failed_when: php_pecl_install.stdout.find('ERROR') != -1
