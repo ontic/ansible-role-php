@@ -3,7 +3,7 @@
 ## Example
 
 ```
-php_repository: ppa:ondrej/php5-5.6
+php_ppa: ppa:ondrej/php5-5.6
 php_web_server_service_name:
 php_fpm_pkg_state: present
 php_fpm_service_state: started

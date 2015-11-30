@@ -8,5 +8,7 @@
 ---
 
 - hosts: all
+  vars:
+    php_ppa: ppa:ondrej/php5-5.6
   roles:
     - { role: ../../ }
