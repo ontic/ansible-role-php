@@ -29,21 +29,6 @@
     - configure
     - php
 
-- name: PHP | Configure present PHP-FPM pool files.
-  sudo: yes
-  template:
-    src: '{{ item.template }}'
-    dest: '{{ php_fpm_pool_path }}/{{ item.name }}.conf'
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart php-fpm
-  with_items: php_fpm_pool_templates
-  when: php_fpm_pool_templates and item.state | default('present') != 'absent'
-  tags:
-    - configure
-    - php
-
 - name: PHP | Configure absent PHP-FPM pool files.
   sudo: yes
   file:
@@ -55,6 +40,21 @@
   tags:
     - configure
     - nginx
+
+- name: PHP | Configure present PHP-FPM pool files.
+  sudo: yes
+  template:
+    src: '{{ item.template }}'
+    dest: '{{ php_fpm_pool_path }}/{{ item.name }}.conf'
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart php-fpm
+  with_items: php_fpm_pool_templates
+  when: php_fpm_pool_templates and item.state | default('present') == 'present'
+  tags:
+    - configure
+    - php
 
 - name: PHP | Configure PHP-FPM conf file.
   sudo: yes
