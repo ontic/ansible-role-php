@@ -19,11 +19,9 @@ php_default_packages:
   - name: php70w-ldap
   - name: php70w-mbstring
   - name: php70w-mcrypt
-  - name: php70w-opcache
   - name: php70w-pdo
   - name: php70w-soap
   - name: php70w-tidy
-  - name: php70w-xml
   - name: php70w-xmlrpc
 
 php_fpm_service_name: php-fpm
