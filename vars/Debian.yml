@@ -22,7 +22,6 @@ php_default_packages:
   - name: php7.0-mysql
   - name: php7.0-soap
   - name: php7.0-tidy
-  - name: php7.0-xmlrpc
 
 php_fpm_service_name: php7.0-fpm
 php_fpm_conf_file: /etc/php/7.0/fpm/php-fpm.conf
