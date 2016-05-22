@@ -3,18 +3,48 @@
 # through the world-wide-web at this URL: http://www.ontic.com.au/license.html
 # If you did not receive a copy of the license and are unable to obtain it through
 # the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
 
 ---
 
 - name: PHP | Include OS-specific variables.
   include_vars: '{{ ansible_os_family }}.yml'
+  tags:
+    - php
+    - php-package
+    - php-configure
+    - php-service
+    - package
+    - configure
+    - service
 
 - name: PHP | Define PHP packages.
   set_fact:
     php_packages: '{{ php_default_packages | list }}'
   when: not php_packages
+  tags:
+    - php
+    - php-package
+    - php-configure
+    - php-service
+    - package
+    - configure
+    - service
 
 - include: package.yml
+  tags:
+    - php
+    - php-package
+    - package
+
 - include: configure.yml
+  tags:
+    - php
+    - php-configure
+    - configure
+
 - include: service.yml
+  tags:
+    - php
+    - php-service
+    - service

@@ -3,11 +3,7 @@
 ## Example
 
 ```
-php_ppa: ppa:ondrej/php5-5.6
-php_web_server_service_name:
-php_fpm_pkg_state: present
-php_fpm_service_state: started
-php_fpm_service_enabled: yes
+php_ppa: ppa:ondrej/php
 php_fpm_conf_template: yourdomain.php-fpm.conf.j2
 php_fpm_pool_templates:
   - name: www
@@ -15,28 +11,24 @@ php_fpm_pool_templates:
   - name: yourdomain
     template: yourdomain.php-fpm-pool.conf.j2
 php_packages:
-  - name: php5
-  - name: php5-cli
-  - name: php5-common
-  - name: php5-curl
-  - name: php5-dev
-  - name: php5-fpm
-  - name: php5-gd
-  - name: php5-imagick
-  - name: php5-imap
-  - name: php5-intl
-  - name: php5-ldap
-  - name: php5-mcrypt
-  - name: php5-mongo
-  - name: php5-mysql
-  - name: php-pear
-  - name: php5-readline
-  - name: php5-redis
-  - name: php5-tidy
-  - name: php5-xdebug
-    state: absent
-  - name: php5-xmlrpc
-  - name: php5-xsl
+  - name: php7.0
+  - name: php7.0-bcmath
+  - name: php7.0-cli
+  - name: php7.0-common
+  - name: php7.0-dev
+  - name: php7.0-fpm
+  - name: php7.0-gd
+  - name: php7.0-imap
+  - name: php7.0-intl
+  - name: php7.0-ldap
+  - name: php7.0-mbstring
+  - name: php7.0-mcrypt
+  - name: php7.0-mysql
+  - name: php7.0-opcache
+  - name: php7.0-soap
+  - name: php7.0-tidy
+  - name: php7.0-xml
+  - name: php7.0-xmlrpc
 php_pecl_extensions:
   - name: igbinary
   - name: amfext
@@ -114,24 +106,24 @@ If the value remains omitted, the following packages will be installed by defaul
 
 | Debian/Ubuntu          | RedHat/CentOS           |
 | :--------------------- | :---------------------- |
-| php5                   |  php                    |
-| php5-cli               |  php-cli                |
-| php5-common            |  php-common             |
-| php5-curl              |  php-curl               |
-| php5-dev               |  php-devel              |
-| php5-fpm               |  php-fpm                |
-| php5-gd                |  php-gd                 |
-| php5-imagick           |  ImageMagick            |
-| php5-imap              |  php-imap               |
-| php5-intl              |  php-intl               |
-| php5-ldap              |  php-ldap               |
-| php5-mcrypt            |  php-mcrypt             |
-| php5-mysql             |  php-mysql              |
-| php-pear               |  php-pear               |
-| php5-tidy              |  php-tidy               |
-| php5-xdebug            |  php-xdebug             |
-| php5-xmlrpc            |  php-xmlrpc             |
-| php5-xsl               |  php-xsl                |
+| php7.0                 |  php70w                 |
+| php7.0-bcmath          |  php70w-bcmath          |
+| php7.0-cli             |  php70w-cli             |
+| php7.0-common          |  php70w-common          |
+| php7.0-dev             |  php70w-devel           |
+| php7.0-fpm             |  php70w-fpm             |
+| php7.0-gd              |  php70w-gd              |
+| php7.0-imap            |  php70w-imap            |
+| php7.0-intl            |  php70w-intl            |
+| php7.0-ldap            |  php70w-ldap            |
+| php7.0-mbstring        |  php70w-mbstring        |
+| php7.0-mcrypt          |  php70w-mcrypt          |
+| php7.0-mysql           |  php70w-opcache         |
+| php7.0-opcache         |  php70w-pdo             |
+| php7.0-soap            |  php70w-soap            |
+| php7.0-tidy            |  php70w-tidy            |
+| php7.0-xml             |  php70w-xml             |
+| php7.0-xmlrpc          |  php70w-xmlrpc          |
 
 ```
 php_pecl_extensions:

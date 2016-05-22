@@ -3,19 +3,19 @@
 # through the world-wide-web at this URL: http://www.ontic.com.au/license.html
 # If you did not receive a copy of the license and are unable to obtain it through
 # the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
 
 ---
 
 - name: restart web server
-  sudo: yes
+  become: yes
   service:
     name: '{{ php_web_server_service_name }}'
     state: restarted
   when: php_web_server_service_name
 
 - name: restart php-fpm
-  sudo: yes
+  become: yes
   service:
     name: '{{ php_fpm_service_name }}'
     state: restarted

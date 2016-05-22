@@ -3,7 +3,7 @@
 # through the world-wide-web at this URL: http://www.ontic.com.au/license.html
 # If you did not receive a copy of the license and are unable to obtain it through
 # the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
 
 ---
 
@@ -12,12 +12,9 @@
   args:
     creates: '{{ php_cli_ini_file }}'
   when: ansible_os_family == 'RedHat'
-  tags:
-    - configure
-    - php
 
 - name: PHP | RedHat | Configure global PHP-CLI execution.
-  sudo: yes
+  become: yes
   template:
     src: 'php-cli-ini.sh.j2'
     dest: '/etc/profile.d/php-cli-ini.sh'
@@ -25,24 +22,18 @@
     group: root
     mode: 0644
   when: ansible_os_family == 'RedHat'
-  tags:
-    - configure
-    - php
 
 - name: PHP | Configure absent PHP-FPM pool files.
-  sudo: yes
+  become: yes
   file:
     path: '{{ php_fpm_pool_path }}/{{ item.name }}.conf'
     state: absent
   notify: restart php-fpm
-  with_items: php_fpm_pool_templates
+  with_items: '{{ php_fpm_pool_templates }}'
   when: php_fpm_pool_templates and item.state | default('present') == 'absent'
-  tags:
-    - configure
-    - nginx
 
 - name: PHP | Configure present PHP-FPM pool files.
-  sudo: yes
+  become: yes
   template:
     src: '{{ item.template }}'
     dest: '{{ php_fpm_pool_path }}/{{ item.name }}.conf'
@@ -50,14 +41,11 @@
     group: root
     mode: 0644
   notify: restart php-fpm
-  with_items: php_fpm_pool_templates
+  with_items: '{{ php_fpm_pool_templates }}'
   when: php_fpm_pool_templates and item.state | default('present') == 'present'
-  tags:
-    - configure
-    - php
 
 - name: PHP | Configure PHP-FPM conf file.
-  sudo: yes
+  become: yes
   template:
     src: '{{ php_fpm_conf_template }}'
     dest: '{{ php_fpm_conf_file }}'
@@ -65,12 +53,10 @@
     group: root
     mode: 0644
   notify: restart php-fpm
-  tags:
-    - configure
-    - php
+  when: php_fpm_conf_template
 
 - name: PHP | Configure properties in PHP ini file.
-  sudo: yes
+  become: yes
   ini_file:
     dest: '{{ php_ini_file }}'
     section: '{{ item.section }}'
@@ -84,14 +70,11 @@
   notify:
     - restart php-fpm
     - restart web server
-  with_items: php_ini
+  with_items: '{{ php_ini }}'
   when: php_ini
-  tags:
-    - configure
-    - php
 
 - name: PHP | Configure properties in PHP-CLI ini file.
-  sudo: yes
+  become: yes
   ini_file:
     dest: '{{ php_cli_ini_file }}'
     section: '{{ item.section }}'
@@ -102,8 +85,5 @@
     owner: root
     group: root
     mode: 0644
-  with_items: php_cli_ini
+  with_items: '{{ php_cli_ini }}'
   when: php_cli_ini
-  tags:
-    - configure
-    - php

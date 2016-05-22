@@ -3,19 +3,16 @@
 # through the world-wide-web at this URL: http://www.ontic.com.au/license.html
 # If you did not receive a copy of the license and are unable to obtain it through
 # the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
 
 ---
 
 - name: PHP | Debian | Add launchpad PPA.
-  sudo: yes
+  become: yes
   apt_repository:
     repo: '{{ php_ppa }}'
     update_cache: yes
   when: ansible_os_family == 'Debian' and php_ppa
-  tags:
-    - package
-    - php
 
 - name: PHP | RedHat | Install EPEL repo.
   yum:
@@ -23,9 +20,6 @@
     state: present
   register: php_epel_repo
   when: ansible_os_family == 'RedHat'
-  tags:
-    - package
-    - php
 
 - name: PHP | RedHat | Import EPEL GPG key.
   rpm_key:
@@ -33,12 +27,9 @@
     state: present
   register: php_epel_key
   when: ansible_os_family == 'RedHat'
-  tags:
-    - package
-    - php
 
 - name: PHP | Debian | Install PHP packages.
-  sudo: yes
+  become: yes
   apt:
     name: '{{ item.name if item.version is not defined else item.name + "=" + item.version }}'
     cache_valid_time: '{{ item.cache_valid_time | default(omit) }}'
@@ -54,14 +45,11 @@
   notify:
     - restart php-fpm
     - restart web server
-  with_items: php_packages
+  with_items: '{{ php_packages }}'
   when: ansible_os_family == 'Debian' and php_packages
-  tags:
-    - package
-    - php
 
 - name: PHP | RedHat | Install PHP packages.
-  sudo: yes
+  become: yes
   yum:
     name: '{{ item.name if item.version is not defined else item.name + "-" + item.version }}'
     conf_file: '{{ item.conf_file | default(omit) }}'
@@ -75,36 +63,27 @@
   notify:
     - restart php-fpm
     - restart web server
-  with_items: php_packages
+  with_items: '{{ php_packages }}'
   when: ansible_os_family == 'RedHat' and php_packages
-  tags:
-    - package
-    - php
 
 - name: PHP | Install PECL extensions.
   shell: echo yes \"\" | pecl install {{ item.name }}
   register: php_pecl_install
   changed_when: php_pecl_install.stdout.find('already installed') == -1
   failed_when: php_pecl_install.stdout.find('ERROR') != -1
-  with_items: php_pecl_extensions
+  with_items: '{{ php_pecl_extensions }}'
   when: php_pecl_extensions and item.state | default('present') == 'present'
   notify:
     - restart php-fpm
     - restart web server
-  tags:
-    - package
-    - php
 
 - name: PHP | Uninstall PECL extensions.
   shell: echo yes \"\" | pecl uninstall {{ item.name }}
   register: php_pecl_uninstall
   changed_when: php_pecl_uninstall.stdout.find('not installed') == -1
   failed_when: php_pecl_uninstall.stdout.find('ERROR') != -1
-  with_items: php_pecl_extensions
+  with_items: '{{ php_pecl_extensions }}'
   when: php_pecl_extensions and item.state | default('present') == 'absent'
   notify:
     - restart php-fpm
     - restart web server
-  tags:
-    - package
-    - php
