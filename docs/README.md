@@ -20,7 +20,6 @@ php_packages:
   - name: php7.0-gd
   - name: php7.0-imap
   - name: php7.0-intl
-  - name: php7.0-ldap
   - name: php7.0-mbstring
   - name: php7.0-mcrypt
   - name: php7.0-mysql
