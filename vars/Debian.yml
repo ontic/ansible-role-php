@@ -13,6 +13,7 @@ php_default_packages:
   - name: php7.0-dev
   - name: php7.0-fpm
 
+
 php_fpm_service_name: php7.0-fpm
 php_fpm_conf_file: /etc/php/7.0/fpm/php-fpm.conf
 php_fpm_pid_file: /var/run/php7.0-fpm.pid
