@@ -8,8 +8,8 @@
 ---
 
 php_ppa:
+php_repos:
 php_enable_repo:
-php_install_remi: false
 php_web_server_service_name:
 php_fpm_pkg_state: present
 php_fpm_service_state: started

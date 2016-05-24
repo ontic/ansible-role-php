@@ -10,7 +10,9 @@
 - hosts: all
   vars:
     php_ppa: ppa:ondrej/php
-    php_enable_repo: remi,remi-php70
-    php_install_remi: true
+    php_enable_repo: epel,remi-php70
+    php_install_remi:
+      - https://mirror.webtatic.com/yum/el7/epel-release.rpm
+      - https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
   roles:
     - { role: ../../ }
