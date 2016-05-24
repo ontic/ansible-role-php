@@ -10,6 +10,8 @@
 - hosts: all
   vars:
     php_ppa: ppa:ondrej/php
-    php_enablerepo: epel
+    php_repos:
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      - https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
   roles:
     - { role: ../../ }

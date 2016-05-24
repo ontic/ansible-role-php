@@ -14,15 +14,13 @@
     update_cache: yes
   when: ansible_os_family == 'Debian' and php_ppa
 
-- name: PHP | RedHat | Install EPEL repo.
+- name: PHP | RedHat | Install repositories.
   yum:
-    name: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm'
+    name: '{{ item }}'
     state: present
   register: php_epel_repo
-  until: '"failed" not in php_epel_repo'
-  retries: 5
-  delay: 10
-  when: ansible_os_family == 'RedHat'
+  with_items: '{{ php_repos }}'
+  when: ansible_os_family == 'RedHat' and php_repos
 
 - name: PHP | RedHat | Import EPEL GPG key.
   rpm_key:
@@ -58,7 +56,7 @@
     conf_file: '{{ item.conf_file | default(omit) }}'
     disable_gpg_check: '{{ item.disable_gpg_check | default(omit) }}'
     disablerepo: '{{ item.disablerepo | default(omit) }}'
-    enablerepo: '{{ item.enablerepo | default(php_enablerepo) }}'
+    enablerepo: '{{ item.enablerepo | default(omit) }}'
     exclude: '{{ item.exclude | default(omit) }}'
     list: '{{ item.list | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
