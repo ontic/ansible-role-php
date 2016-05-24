@@ -19,4 +19,3 @@
   service:
     name: '{{ php_fpm_service_name }}'
     state: restarted
-  when: php_fpm_service_state == 'started' and not php_fpm_pkg_state == 'absent'
