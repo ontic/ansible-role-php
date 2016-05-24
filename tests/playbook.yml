@@ -10,5 +10,6 @@
 - hosts: all
   vars:
     php_ppa: ppa:ondrej/php
+    php_enablerepo: remi,remi-php70
   roles:
     - { role: ../../ }
