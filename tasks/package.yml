@@ -18,14 +18,14 @@
   become: yes
   yum:
     name: '{{ item.name }}'
-    state: '{{ item.state | default(present) }}'
+    state: '{{ item.state | default(omit) }}'
   with_items: '{{ php_repos }}'
   when: ansible_os_family == 'RedHat' and php_repos and item.name
 
 - name: PHP | RedHat | Import GPG keys.
   rpm_key:
     key: '{{ item.key }}'
-    state: '{{ item.state | default(present) }}'
+    state: '{{ item.state | default(omit) }}'
   with_items: '{{ php_repos }}'
   when: ansible_os_family == 'RedHat' and php_repos and item.key
 
