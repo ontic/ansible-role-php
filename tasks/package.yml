@@ -19,7 +19,7 @@
   yum:
     name: '{{ item }}'
     state: present
-  with_items: php_repos
+  with_items: ' {{ php_repos }}'
   when: ansible_os_family == 'RedHat' and php_repos
 
 - name: PHP | Debian | Install PHP packages.
