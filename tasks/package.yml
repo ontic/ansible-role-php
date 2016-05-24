@@ -60,7 +60,7 @@
     exclude: '{{ item.exclude | default(omit) }}'
     list: '{{ item.list | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
-    update_cache: '{{ php_remi_repo.changed or php_remi_key.changed or item.update_cache | default(omit) }}'
+    update_cache: '{{ item.update_cache | default(omit) }}'
   notify:
     - restart php-fpm
     - restart web server
