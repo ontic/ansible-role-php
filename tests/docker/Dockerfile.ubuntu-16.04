@@ -5,6 +5,6 @@ RUN apt -y install libffi-dev libssl-dev python-setuptools python-dev python-pip
 RUN pip install ansible
 RUN mkdir -p /etc/ansible
 
-COPY initctl_faker .
+COPY docker/initctl_faker .
 RUN chmod +x initctl_faker && rm -fr /sbin/initctl && ln -s /initctl_faker /sbin/initctl
 RUN echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
