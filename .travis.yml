@@ -38,6 +38,7 @@ script:
     | tee /tmp/output.txt; grep -q 'changed=0.*unreachable=0.*failed=0' /tmp/output.txt
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm php --version'
   - sudo docker stop "$(cat ${container_id})"
 
 notifications:
