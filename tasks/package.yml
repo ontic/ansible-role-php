@@ -56,7 +56,7 @@
     conf_file: '{{ item.conf_file | default(omit) }}'
     disable_gpg_check: '{{ item.disable_gpg_check | default(omit) }}'
     disablerepo: '{{ item.disablerepo | default(omit) }}'
-    enablerepo: '{{ item.enablerepo | default(php_enable_repo) }}'
+    enablerepo: '{{ item.enablerepo | default(omit) }}'
     exclude: '{{ item.exclude | default(omit) }}'
     list: '{{ item.list | default(omit) }}'
     state: '{{ item.state | default(omit) }}'

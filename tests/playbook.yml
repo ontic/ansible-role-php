@@ -10,7 +10,7 @@
 - hosts: all
   vars:
     php_ppa: ppa:ondrej/php
-    php_install_remi:
+    php_repos:
       - name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
         key: https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-el7
   roles:
