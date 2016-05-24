@@ -10,9 +10,8 @@
 - hosts: all
   vars:
     php_ppa: ppa:ondrej/php
-    php_enable_repo: epel,webtatic-testing
     php_install_remi:
-      - https://mirror.webtatic.com/yum/el7/epel-release.rpm
-      - https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+      - name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+        key: https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-el7
   roles:
     - { role: ../../ }
