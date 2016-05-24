@@ -17,8 +17,8 @@
 - name: PHP | RedHat | Install repositories.
   yum_repository:
     name: '{{ item.name }}'
-    baseurl: '{{ item.key }}'
-    gpgkey: '{{ item.url }}'
+    baseurl: '{{ item.url }}'
+    gpgkey: '{{ item.key }}'
   with_items: '{{ php_repos }}'
   when: ansible_os_family == 'RedHat' and php_repos
 
