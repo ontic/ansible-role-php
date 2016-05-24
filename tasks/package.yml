@@ -18,12 +18,14 @@
   yum:
     name: 'http://rpms.remirepo.net/enterprise/remi-release-{{ ansible_distribution_major_version }}.rpm'
     state: present
+  register: php_remi_repo
   when: ansible_os_family == 'RedHat' and php_install_remi
 
 - name: PHP | RedHat | Import Remi GPG key.
   rpm_key:
     key: 'http://rpms.remirepo.net/RPM-GPG-KEY-remi'
     state: present
+  register: php_remi_key
   when: ansible_os_family == 'RedHat' and php_install_remi
 
 - name: PHP | Debian | Install PHP packages.
@@ -57,7 +59,7 @@
     exclude: '{{ item.exclude | default(omit) }}'
     list: '{{ item.list | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
-    update_cache: '{{ php_epel_repo.changed or php_epel_key.changed or item.update_cache | default(omit) }}'
+    update_cache: '{{ php_remi_repo.changed or php_remi_key.changed or item.update_cache | default(omit) }}'
   notify:
     - restart php-fpm
     - restart web server
