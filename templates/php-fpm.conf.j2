@@ -8,14 +8,6 @@
 ; prefix (/usr). This prefix can be dynamically changed by using the
 ; '-p' argument from the command line.
 
-; Include one or more files. If glob(3) exists, it is used to include a bunch of
-; files from a glob(3) pattern. This directive can be used everywhere in the
-; file.
-; Relative path can also be used. They will be prefixed by:
-;  - the global prefix if it's been set (-p argument)
-;  - /usr otherwise
-;include=/etc/php5/fpm/*.conf
-
 ;;;;;;;;;;;;;;;;;;
 ; Global Options ;
 ;;;;;;;;;;;;;;;;;;
@@ -126,6 +118,10 @@ error_log = {{ php_fpm_error_log }}
 ; used in logs and stats. There is no limitation on the number of pools which
 ; FPM can handle. Your system will tell you anyway :)
 
-; To configure the pools it is recommended to have one .conf file per
-; pool in the following directory:
+; Include one or more files. If glob(3) exists, it is used to include a bunch of
+; files from a glob(3) pattern. This directive can be used everywhere in the
+; file.
+; Relative path can also be used. They will be prefixed by:
+;  - the global prefix if it's been set (-p argument)
+;  - /usr otherwise
 include={{ php_fpm_pool_path }}/*.conf
