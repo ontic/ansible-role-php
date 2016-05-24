@@ -20,7 +20,7 @@
     name: '{{ item.url }}'
     state: '{{ item.state | default(omit) }}'
   with_items: '{{ php_repos }}'
-  when: ansible_os_family == 'RedHat' and php_repos and item.name
+  when: ansible_os_family == 'RedHat' and php_repos and item.url
 
 - name: PHP | RedHat | Import GPG keys.
   rpm_key:
