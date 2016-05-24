@@ -10,9 +10,10 @@
 - hosts: all
   vars:
     php_ppa: ppa:ondrej/php
-    php_enable_repo: webtatic-testing
+    php_enable_repo: webtatic
     php_repos:
-      - name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+      - name: webtatic
+        url: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
         key: https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-el7
   roles:
     - { role: ../../ }
