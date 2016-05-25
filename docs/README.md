@@ -11,12 +11,13 @@ php_fpm_pool_templates:
   - name: yourdomain
     template: yourdomain.php-fpm-pool.conf.j2
 php_packages:
-  - name: php7.0
-  - name: php7.0-bcmath
-  - name: php7.0-cli
   - name: php7.0-common
+  - name: php7.0-cli
   - name: php7.0-dev
   - name: php7.0-fpm
+  - name: php7.0-bcmath
+  - name: php7.0-bz2
+  - name: php7.0-curl
   - name: php7.0-gd
   - name: php7.0-imap
   - name: php7.0-intl
@@ -24,11 +25,10 @@ php_packages:
   - name: php7.0-mbstring
   - name: php7.0-mcrypt
   - name: php7.0-mysql
-  - name: php7.0-opcache
   - name: php7.0-soap
   - name: php7.0-tidy
-  - name: php7.0-xml
   - name: php7.0-xmlrpc
+  - name: php7.0-zip
 php_pecl_extensions:
   - name: igbinary
   - name: amfext
@@ -106,24 +106,24 @@ If the value remains omitted, the following packages will be installed by defaul
 
 | Debian/Ubuntu          | RedHat/CentOS           |
 | :--------------------- | :---------------------- |
-| php7.0                 |  php70w                 |
-| php7.0-bcmath          |  php70w-bcmath          |
-| php7.0-cli             |  php70w-cli             |
 | php7.0-common          |  php70w-common          |
+| php7.0-cli             |  php70w-cli             |
 | php7.0-dev             |  php70w-devel           |
 | php7.0-fpm             |  php70w-fpm             |
-| php7.0-gd              |  php70w-gd              |
-| php7.0-imap            |  php70w-imap            |
-| php7.0-intl            |  php70w-intl            |
-| php7.0-ldap            |  php70w-ldap            |
-| php7.0-mbstring        |  php70w-mbstring        |
-| php7.0-mcrypt          |  php70w-mcrypt          |
-| php7.0-mysql           |  php70w-opcache         |
-| php7.0-opcache         |  php70w-pdo             |
-| php7.0-soap            |  php70w-soap            |
-| php7.0-tidy            |  php70w-tidy            |
-| php7.0-xml             |  php70w-xml             |
+| php7.0-bcmath          |  php70w-bcmath          |
+| php7.0-bz2             |  php70w-gd              |
+| php7.0-curl            |  php70w-imap            |
+| php7.0-gd              |  php70w-intl            |
+| php7.0-imap            |  php70w-ldap            |
+| php7.0-intl            |  php70w-mbstring        |
+| php7.0-ldap            |  php70w-mcrypt          |
+| php7.0-mbstring        |  php70w-opcache         |
+| php7.0-mcrypt          |  php70w-pdo             |
+| php7.0-mysql           |  php70w-soap            |
+| php7.0-soap            |  php70w-tidy            |
+| php7.0-tidy            |  php70w-xml             |
 | php7.0-xmlrpc          |  php70w-xmlrpc          |
+| php7.0-zip             |                         |
 
 ```
 php_pecl_extensions:

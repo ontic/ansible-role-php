@@ -13,6 +13,8 @@ php_default_packages:
   - name: php7.0-dev
   - name: php7.0-fpm
   - name: php7.0-bcmath
+  - name: php7.0-bz2
+  - name: php7.0-curl
   - name: php7.0-gd
   - name: php7.0-imap
   - name: php7.0-intl
@@ -20,11 +22,10 @@ php_default_packages:
   - name: php7.0-mbstring
   - name: php7.0-mcrypt
   - name: php7.0-mysql
-  - name: php7.0-opcache
   - name: php7.0-soap
   - name: php7.0-tidy
-  - name: php7.0-xml
   - name: php7.0-xmlrpc
+  - name: php7.0-zip
 
 php_fpm_service_name: php7.0-fpm
 php_fpm_conf_file: /etc/php/7.0/fpm/php-fpm.conf
