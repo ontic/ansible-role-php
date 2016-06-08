@@ -2,7 +2,7 @@
 
 | Branch             | Build               | Galaxy              | Release              |
 | :----------------- | :------------------ | :------------------ | :------------------- |
-| **master**         | [![Build](https://img.shields.io/travis/ontic/ansible-role-php/master.svg)](https://travis-ci.org/ontic/ansible-role-php) | [![Galaxy](https://img.shields.io/badge/galaxy-ontic.php-blue.svg)](https://galaxy.ansible.com/list#/roles/6207) | [![Release](https://img.shields.io/github/release/ontic/ansible-role-php.svg)](https://github.com/ontic/ansible-role-php/releases) |
+| **master**         | [![Build](https://img.shields.io/travis/ontic/ansible-role-php/master.svg)](https://travis-ci.org/ontic/ansible-role-php) | [![Galaxy](https://img.shields.io/badge/galaxy-ontic.php-blue.svg)](https://galaxy.ansible.com/ontic/php) | [![Release](https://img.shields.io/github/release/ontic/ansible-role-php.svg)](https://github.com/ontic/ansible-role-php/releases) |
 
 ## Introduction
 

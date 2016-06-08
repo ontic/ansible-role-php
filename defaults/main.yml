@@ -11,10 +11,10 @@ php_ppa:
 php_repos:
 php_enable_repo: ''
 php_web_server_service_name:
-php_fpm_pkg_state: present
-php_fpm_service_state: started
+php_fpm_pkg_state: 'present'
+php_fpm_service_state: 'started'
 php_fpm_service_enabled: yes
-php_fpm_conf_template: php-fpm.conf.j2
+php_fpm_conf_template: 'php-fpm.conf.j2'
 php_fpm_pool_templates:
 php_packages:
 php_pecl_extensions:

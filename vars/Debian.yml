@@ -8,29 +8,29 @@
 ---
 
 php_default_packages:
-  - name: php7.0-common
-  - name: php7.0-cli
-  - name: php7.0-dev
-  - name: php7.0-fpm
-  - name: php7.0-bcmath
-  - name: php7.0-bz2
-  - name: php7.0-curl
-  - name: php7.0-gd
-  - name: php7.0-imap
-  - name: php7.0-intl
-  - name: php7.0-ldap
-  - name: php7.0-mbstring
-  - name: php7.0-mcrypt
-  - name: php7.0-mysql
-  - name: php7.0-soap
-  - name: php7.0-tidy
-  - name: php7.0-xmlrpc
-  - name: php7.0-zip
+  - name: 'php7.0-common'
+  - name: 'php7.0-cli'
+  - name: 'php7.0-dev'
+  - name: 'php7.0-fpm'
+  - name: 'php7.0-bcmath'
+  - name: 'php7.0-bz2'
+  - name: 'php7.0-curl'
+  - name: 'php7.0-gd'
+  - name: 'php7.0-imap'
+  - name: 'php7.0-intl'
+  - name: 'php7.0-ldap'
+  - name: 'php7.0-mbstring'
+  - name: 'php7.0-mcrypt'
+  - name: 'php7.0-mysql'
+  - name: 'php7.0-soap'
+  - name: 'php7.0-tidy'
+  - name: 'php7.0-xmlrpc'
+  - name: 'php7.0-zip'
 
-php_fpm_service_name: php7.0-fpm
-php_fpm_conf_file: /etc/php/7.0/fpm/php-fpm.conf
-php_fpm_pid_file: /var/run/php7.0-fpm.pid
-php_fpm_error_log: /var/log/php7.0-fpm.log
-php_fpm_pool_path: /etc/php/7.0/fpm/pool.d
+php_fpm_service_name: 'php7.0-fpm'
+php_fpm_conf_file: '/etc/php/7.0/fpm/php-fpm.conf'
+php_fpm_pid_file: '/var/run/php7.0-fpm.pid'
+php_fpm_error_log: '/var/log/php7.0-fpm.log'
+php_fpm_pool_path: '/etc/php/7.0/fpm/pool.d'
 php_ini_file: "{{ '/etc/php/7.0/fpm/php.ini' if php_fpm_pkg_state != 'absent' else '/etc/php/7.0/apache2/php.ini' }}"
-php_cli_ini_file: /etc/php/7.0/cli/php.ini
+php_cli_ini_file: '/etc/php/7.0/cli/php.ini'

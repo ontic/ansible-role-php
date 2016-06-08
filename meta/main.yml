@@ -10,29 +10,29 @@
 dependencies: []
 
 galaxy_info:
-  author: Adam Dyson
-  description: This role installs PHP on RedHat/CentOS and Debian/Ubuntu Linux servers.
-  company: Ontic
-  license: BSD-3-Clause
-  min_ansible_version: 2.0
+  author: 'Adam Dyson'
+  description: 'This role installs PHP on RedHat/CentOS and Debian/Ubuntu Linux servers.'
+  company: 'Ontic'
+  license: 'BSD-3-Clause'
+  min_ansible_version: '2.1'
   platforms:
-    - name: Ubuntu
+    - name: 'Ubuntu'
       versions:
-        - precise
-        - trusty
-        - xenial
-    - name: Debian
+        - 'precise'
+        - 'trusty'
+        - 'xenial'
+    - name: 'Debian'
       versions:
-        - wheezy
-        - jessie
+        - 'wheezy'
+        - 'jessie'
     - name: EL
       versions:
-        - 6
-        - 7
-  categories:
-    - ontic
-    - web
-    - server
-    - php
-    - fpm
-    - pecl
+        - '6'
+        - '7'
+  galaxy_tags:
+    - 'ontic'
+    - 'web'
+    - 'server'
+    - 'php'
+    - 'fpm'
+    - 'pecl'

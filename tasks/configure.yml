@@ -7,55 +7,55 @@
 
 ---
 
-- name: PHP | RedHat | Create separate PHP-CLI ini file.
+- name: 'PHP | RedHat | Create separate PHP-CLI ini file.'
   command: 'cp {{ php_ini_file }} {{ php_cli_ini_file }}'
   args:
     creates: '{{ php_cli_ini_file }}'
-  when: ansible_os_family == 'RedHat'
+  when: '{{ ansible_os_family == "RedHat" }}'
 
-- name: PHP | RedHat | Configure global PHP-CLI execution.
+- name: 'PHP | RedHat | Configure global PHP-CLI execution.'
   become: yes
   template:
     src: 'php-cli-ini.sh.j2'
     dest: '/etc/profile.d/php-cli-ini.sh'
-    owner: root
-    group: root
-    mode: 0644
-  when: ansible_os_family == 'RedHat'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when: '{{ ansible_os_family == "RedHat" }}'
 
-- name: PHP | Configure absent PHP-FPM pool files.
+- name: 'PHP | Configure absent PHP-FPM pool files.'
   become: yes
   file:
     path: '{{ php_fpm_pool_path }}/{{ item.name }}.conf'
-    state: absent
-  notify: restart php-fpm
+    state: 'absent'
+  notify: 'restart php-fpm'
   with_items: '{{ php_fpm_pool_templates }}'
-  when: php_fpm_pool_templates and item.state | default('present') == 'absent'
+  when: '{{ php_fpm_pool_templates and item.state | default("present") == "absent" }}'
 
-- name: PHP | Configure present PHP-FPM pool files.
+- name: 'PHP | Configure present PHP-FPM pool files.'
   become: yes
   template:
     src: '{{ item.template }}'
     dest: '{{ php_fpm_pool_path }}/{{ item.name }}.conf'
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart php-fpm
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'restart php-fpm'
   with_items: '{{ php_fpm_pool_templates }}'
-  when: php_fpm_pool_templates and item.state | default('present') == 'present'
+  when: '{{ php_fpm_pool_templates and item.state | default("present") == "present" }}'
 
-- name: PHP | Configure PHP-FPM conf file.
+- name: 'PHP | Configure PHP-FPM conf file.'
   become: yes
   template:
     src: '{{ php_fpm_conf_template }}'
     dest: '{{ php_fpm_conf_file }}'
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart php-fpm
-  when: php_fpm_conf_template
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'restart php-fpm'
+  when: '{{ php_fpm_conf_template }}'
 
-- name: PHP | Configure properties in PHP ini file.
+- name: 'PHP | Configure properties in PHP ini file.'
   become: yes
   ini_file:
     dest: '{{ php_ini_file }}'
@@ -63,17 +63,16 @@
     option: '{{ item.option | default(omit) }}'
     value: '{{ item.value | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
-    backup: yes
-    owner: root
-    group: root
-    mode: 0644
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
   notify:
-    - restart php-fpm
-    - restart web server
+    - 'restart php-fpm'
+    - 'restart web server'
   with_items: '{{ php_ini }}'
-  when: php_ini
+  when: '{{ php_ini }}'
 
-- name: PHP | Configure properties in PHP-CLI ini file.
+- name: 'PHP | Configure properties in PHP-CLI ini file.'
   become: yes
   ini_file:
     dest: '{{ php_cli_ini_file }}'
@@ -81,9 +80,9 @@
     option: '{{ item.option | default(omit) }}'
     value: '{{ item.value | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
-    backup: yes
-    owner: root
-    group: root
-    mode: 0644
+    backup: 'yes'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
   with_items: '{{ php_cli_ini }}'
-  when: php_cli_ini
+  when: '{{ php_cli_ini }}'

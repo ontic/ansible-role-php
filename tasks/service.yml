@@ -7,7 +7,8 @@
 
 ---
 
-- name: PHP | Enable PHP FPM service.
+- name: 'PHP | Enable PHP FPM service.'
+  become: yes
   service:
     name: '{{ php_fpm_service_name }}'
     state: '{{ php_fpm_service_state }}'

@@ -7,16 +7,16 @@
 
 ---
 
-- name: restart web server
+- name: 'restart web server'
   become: yes
   service:
     name: '{{ php_web_server_service_name }}'
-    state: restarted
-  when: php_web_server_service_name
+    state: 'restarted'
+  when: '{{ php_web_server_service_name }}'
 
-- name: restart php-fpm
+- name: 'restart php-fpm'
   become: yes
   service:
     name: '{{ php_fpm_service_name }}'
-    state: restarted
-  when: php_fpm_service_state == 'started' and not php_fpm_pkg_state == 'absent'
+    state: 'restarted'
+  when: '{{ php_fpm_service_state == "started" and php_fpm_pkg_state != "absent" }}'

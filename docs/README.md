@@ -3,44 +3,44 @@
 ## Example
 
 ```
-php_ppa: ppa:ondrej/php
-php_fpm_conf_template: yourdomain.php-fpm.conf.j2
+php_ppa: 'ppa:ondrej/php'
+php_fpm_conf_template: 'example.com.php-fpm.conf.j2'
 php_fpm_pool_templates:
-  - name: www
-    state: absent
-  - name: yourdomain
-    template: yourdomain.php-fpm-pool.conf.j2
+  - name: 'www'
+    state: 'absent'
+  - name: 'example'
+    template: 'example.com.php-fpm-pool.conf.j2'
 php_packages:
-  - name: php7.0-common
-  - name: php7.0-cli
-  - name: php7.0-dev
-  - name: php7.0-fpm
-  - name: php7.0-bcmath
-  - name: php7.0-bz2
-  - name: php7.0-curl
-  - name: php7.0-gd
-  - name: php7.0-imap
-  - name: php7.0-intl
-  - name: php7.0-ldap
-  - name: php7.0-mbstring
-  - name: php7.0-mcrypt
-  - name: php7.0-mysql
-  - name: php7.0-soap
-  - name: php7.0-tidy
-  - name: php7.0-xmlrpc
-  - name: php7.0-zip
+  - name: 'php7.0-common'
+  - name: 'php7.0-cli'
+  - name: 'php7.0-dev'
+  - name: 'php7.0-fpm'
+  - name: 'php7.0-bcmath'
+  - name: 'php7.0-bz2'
+  - name: 'php7.0-curl'
+  - name: 'php7.0-gd'
+  - name: 'php7.0-imap'
+  - name: 'php7.0-intl'
+  - name: 'php7.0-ldap'
+  - name: 'php7.0-mbstring'
+  - name: 'php7.0-mcrypt'
+  - name: 'php7.0-mysql'
+  - name: 'php7.0-soap'
+  - name: 'php7.0-tidy'
+  - name: 'php7.0-xmlrpc'
+  - name: 'php7.0-zip'
 php_pecl_extensions:
-  - name: igbinary
-  - name: amfext
-    state: absent
+  - name: 'igbinary'
+  - name: 'amfext'
+    state: 'absent'
 php_ini:
-  - { section: PHP, option: max_execution_time, value: 60 }
-  - { section: Session, option: session.serialize_handler, value: igbinary }
-  - { section: igbinary, option: igbinary.compact_strings, value: 1 }
+  - { section: 'PHP', option: 'max_execution_time', value: '60' }
+  - { section: 'Session', option: 'session.serialize_handler', value: 'igbinary' }
+  - { section: 'igbinary', option: 'igbinary.compact_strings', value: '1' }
 php_cli_ini:
-  - { section: PHP, option: max_execution_time, value: 0 }
-  - { section: Session, option: session.serialize_handler, value: igbinary }
-  - { section: igbinary, option: igbinary.compact_strings, value: 1 }
+  - { section: 'PHP', option: 'max_execution_time', value: '0' }
+  - { section: 'Session', 'option: session.serialize_handler', value: 'igbinary' }
+  - { section: 'igbinary', option: 'igbinary.compact_strings', value: '1' }
 ```
 
 ## Role Variables
@@ -48,10 +48,27 @@ php_cli_ini:
 Available variables are listed below, along with default values (see [defaults/main.yml](/defaults/main.yml)):
 
 ```
-php_repository:
+php_ppa:
 ```
 
 The repository to add to APT. Which would allow more recent versions of PHP to be installed.
+
+```
+php_repos:
+```
+
+A list of the repositories to add on RedHat/CentOS. Each repository expects the following parameters:
+
+* `url` The HTTP URL of the repository.
+* `key` The HTTP URL or the gpg key.
+* `state` The state of the repository, valid values are `present` or `absent`.
+
+```
+php_enable_repo: ''
+```
+
+The repository ID to enable when installing or updating packages on RedHat/CentOS. Note that each
+individual package defined in `php_packages` can specify is own repository using `enablerepo`.
 
 ```
 php_web_server_service_name:
@@ -64,13 +81,13 @@ variable to `httpd` for RedHat/CentOS or `apache2` for Debian/Ubuntu. The servic
 your INI files are changed or a new package/extension is installed.
 
 ```
-php_fpm_pkg_state: present
+php_fpm_pkg_state: 'present'
 ```
 
 The desired PHP-FPM package state, valid values are `present`, or `absent`.
 
 ```
-php_fpm_service_state: started
+php_fpm_service_state: 'started'
 ```
 
 The desired PHP-FPM service state, valid values are `started`, `stopped`, `restarted` or `reloaded`.
@@ -82,7 +99,7 @@ php_fpm_service_enabled: yes
 Whether the PHP-FPM service should start on boot, valid values are `yes`, or `no`.
 
 ```
-php_fpm_conf_template: php-fpm.conf.j2
+php_fpm_conf_template: 'php-fpm.conf.j2'
 ```
 
 The template file name that replaces the PHP-FPM configuration file.

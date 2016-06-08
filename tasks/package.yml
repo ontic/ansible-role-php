@@ -7,29 +7,29 @@
 
 ---
 
-- name: PHP | Debian | Add launchpad PPA.
+- name: 'PHP | Debian | Add launchpad PPA.'
   become: yes
   apt_repository:
     repo: '{{ php_ppa }}'
     update_cache: yes
-  when: ansible_os_family == 'Debian' and php_ppa
+  when: '{{ ansible_os_family == "Debian" and php_ppa }}'
 
-- name: PHP | RedHat | Install repositories.
+- name: 'PHP | RedHat | Install repositories.'
   become: yes
   yum:
     name: '{{ item.url }}'
     state: '{{ item.state | default(omit) }}'
   with_items: '{{ php_repos }}'
-  when: ansible_os_family == 'RedHat' and php_repos and item.url
+  when: '{{ ansible_os_family == "RedHat" and php_repos and item.url }}'
 
-- name: PHP | RedHat | Import GPG keys.
+- name: 'PHP | RedHat | Import GPG keys.'
   rpm_key:
     key: '{{ item.key }}'
     state: '{{ item.state | default(omit) }}'
   with_items: '{{ php_repos }}'
-  when: ansible_os_family == 'RedHat' and php_repos and item.key
+  when: '{{ ansible_os_family == "RedHat" and php_repos and item.key }}'
 
-- name: PHP | Debian | Install PHP packages.
+- name: 'PHP | Debian | Install PHP packages.'
   become: yes
   apt:
     name: '{{ item.name if item.version is not defined else item.name + "=" + item.version }}'
@@ -44,12 +44,12 @@
     update_cache: '{{ item.update_cache | default(omit) }}'
     upgrade: '{{ item.upgrade | default(omit) }}'
   notify:
-    - restart php-fpm
-    - restart web server
+    - 'restart php-fpm'
+    - 'restart web server'
   with_items: '{{ php_packages }}'
-  when: ansible_os_family == 'Debian' and php_packages
+  when: '{{ ansible_os_family == "Debian" }}'
 
-- name: PHP | RedHat | Install PHP packages.
+- name: 'PHP | RedHat | Install PHP packages.'
   become: yes
   yum:
     name: '{{ item.name if item.version is not defined else item.name + "-" + item.version }}'
@@ -62,29 +62,29 @@
     state: '{{ item.state | default(omit) }}'
     update_cache: '{{ item.update_cache | default(omit) }}'
   notify:
-    - restart php-fpm
-    - restart web server
+    - 'restart php-fpm'
+    - 'restart web server'
   with_items: '{{ php_packages }}'
-  when: ansible_os_family == 'RedHat' and php_packages
+  when: '{{ ansible_os_family == "RedHat" }}'
 
-- name: PHP | Install PECL extensions.
-  shell: echo yes \"\" | pecl install {{ item.name }}
-  register: php_pecl_install
-  changed_when: php_pecl_install.stdout.find('already installed') == -1
-  failed_when: php_pecl_install.stdout.find('ERROR') != -1
+- name: 'PHP | Install PECL extensions.'
+  shell: 'echo yes \"\" | pecl install {{ item.name }}'
+  register: 'php_pecl_install'
+  changed_when: '{{ php_pecl_install.stdout.find("already installed") == -1 }}'
+  failed_when: '{{ php_pecl_install.stdout.find("ERROR") != -1 }}'
   with_items: '{{ php_pecl_extensions }}'
-  when: php_pecl_extensions and item.state | default('present') == 'present'
+  when: '{{ php_pecl_extensions and item.state | default("present") == "present" }}'
   notify:
-    - restart php-fpm
-    - restart web server
+    - 'restart php-fpm'
+    - 'restart web server'
 
-- name: PHP | Uninstall PECL extensions.
-  shell: echo yes \"\" | pecl uninstall {{ item.name }}
-  register: php_pecl_uninstall
-  changed_when: php_pecl_uninstall.stdout.find('not installed') == -1
-  failed_when: php_pecl_uninstall.stdout.find('ERROR') != -1
+- name: 'PHP | Uninstall PECL extensions.'
+  shell: 'echo yes \"\" | pecl uninstall {{ item.name }}'
+  register: 'php_pecl_uninstall'
+  changed_when: '{{ php_pecl_uninstall.stdout.find("not installed") == -1 }}'
+  failed_when: '{{ php_pecl_uninstall.stdout.find("ERROR") != -1 }}'
   with_items: '{{ php_pecl_extensions }}'
-  when: php_pecl_extensions and item.state | default('present') == 'absent'
+  when: '{{ php_pecl_extensions and item.state | default("present") == "absent" }}'
   notify:
-    - restart php-fpm
-    - restart web server
+    - 'restart php-fpm'
+    - 'restart web server'

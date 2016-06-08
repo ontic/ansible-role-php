@@ -7,14 +7,14 @@
 
 ---
 
-- hosts: all
+- hosts: 'all'
   vars:
-    php_ppa: ppa:ondrej/php
+    php_ppa: 'ppa:ondrej/php'
     php_enable_repo: 'epel,webtatic-testing'
     php_repos:
-      - url: https://mirror.webtatic.com/yum/el7/epel-release.rpm
-        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
-      - url: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-        key: https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-el7
+      - url: 'https://mirror.webtatic.com/yum/el7/epel-release.rpm'
+        key: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
+      - url: 'https://mirror.webtatic.com/yum/el7/webtatic-release.rpm'
+        key: 'https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-el7'
   roles:
-    - { role: ../../ }
+    - { role: 'ontic.php' }
