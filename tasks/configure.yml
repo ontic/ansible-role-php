@@ -53,7 +53,7 @@
     group: 'root'
     mode: '0644'
   notify: 'restart php-fpm'
-  when: '{{ php_fpm_conf_template }}'
+  when: '{{ php_fpm_conf_template | default(None) == None }}'
 
 - name: 'PHP | Configure properties in PHP ini file.'
   become: yes
@@ -80,7 +80,6 @@
     option: '{{ item.option | default(omit) }}'
     value: '{{ item.value | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
-    backup: 'yes'
     owner: 'root'
     group: 'root'
     mode: '0644'
