@@ -53,7 +53,7 @@
     group: 'root'
     mode: '0644'
   notify: 'restart php-fpm'
-  when: '{{ php_fpm_conf_template | default(None) == None }}'
+  when: '{{ php_fpm_conf_template | default(None) != None }}'
 
 - name: 'PHP | Configure properties in PHP ini file.'
   become: yes

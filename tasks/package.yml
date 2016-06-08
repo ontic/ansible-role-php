@@ -12,7 +12,7 @@
   apt_repository:
     repo: '{{ php_ppa }}'
     update_cache: yes
-  when: '{{ ansible_os_family == "Debian" and php_ppa }}'
+  when: '{{ ansible_os_family == "Debian" and php_ppa | default(None) != None }}'
 
 - name: 'PHP | RedHat | Install repositories.'
   become: yes
