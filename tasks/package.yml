@@ -29,10 +29,10 @@
   with_items: '{{ php_repos }}'
   when: '{{ ansible_os_family == "RedHat" and php_repos and item.key is defined }}'
 
-- name: 'PHP | Debian | Install PHP packages.'
+- name: 'PHP | Debian | Install PHP extensions.'
   become: yes
   apt:
-    name: '{{ item.name if item.version is not defined else item.name + "=" + item.version }}'
+    name: '{{ php_package_pattern | replace("%version%", php_version) | replace("%extension%", item.name) }}{{ "" if item.version is not defined else "=" + item.version }}'
     cache_valid_time: '{{ item.cache_valid_time | default(omit) }}'
     deb: '{{ item.deb | default(omit) }}'
     default_release: '{{ item.default_release | default(omit) }}'
@@ -52,7 +52,7 @@
 - name: 'PHP | RedHat | Install PHP packages.'
   become: yes
   yum:
-    name: '{{ item.name if item.version is not defined else item.name + "-" + item.version }}'
+    name: '{{ php_package_pattern | replace("%version%", php_version) | replace("%extension%", item.name) }}{{ "" if item.version is not defined else "-" + item.version }}'
     conf_file: '{{ item.conf_file | default(omit) }}'
     disable_gpg_check: '{{ item.disable_gpg_check | default(omit) }}'
     disablerepo: '{{ item.disablerepo | default(omit) }}'
@@ -65,6 +65,18 @@
     - 'restart php-fpm'
     - 'restart web server'
   with_items: '{{ php_packages }}'
+  when: '{{ ansible_os_family == "RedHat" }}'
+
+- name: 'PHP | Debian | Install PEAR(PECL)'
+  apt:
+    name: 'php-pear'
+    state: '{{ "present" if php_pecl_extensions else "absent" }}'
+  when: '{{ ansible_os_family == "Debian" }}'
+
+- name: 'PHP | RedHat | Install PEAR(PECL)'
+  yum:
+    name: 'php-pear'
+    state: '{{ "present" if php_pecl_extensions else "absent" }}'
   when: '{{ ansible_os_family == "RedHat" }}'
 
 - name: 'PHP | Install PECL extensions.'
@@ -88,3 +100,10 @@
   notify:
     - 'restart php-fpm'
     - 'restart web server'
+
+- name: 'PHP | Install webserver mod'
+  apt:
+    name: 'libapache2-mod-php{{ php_version }}'
+    state: 'present'
+  when: '{{ php_web_server_service_name == "apache2" }}'
+
