@@ -8,6 +8,7 @@
 ---
 
 php_ppa:
+php_version:
 php_repos:
 php_enable_repo: ''
 php_web_server_service_name:
