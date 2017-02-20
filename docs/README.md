@@ -3,6 +3,7 @@
 ## Example
 
 ```
+php_version: '7.1'
 php_ppa: 'ppa:ondrej/php'
 php_fpm_conf_template: 'example.com.php-fpm.conf.j2'
 php_fpm_pool_templates:
@@ -11,24 +12,24 @@ php_fpm_pool_templates:
   - name: 'example'
     template: 'example.com.php-fpm-pool.conf.j2'
 php_packages:
-  - name: 'php7.0-common'
-  - name: 'php7.0-cli'
-  - name: 'php7.0-dev'
-  - name: 'php7.0-fpm'
-  - name: 'php7.0-bcmath'
-  - name: 'php7.0-bz2'
-  - name: 'php7.0-curl'
-  - name: 'php7.0-gd'
-  - name: 'php7.0-imap'
-  - name: 'php7.0-intl'
-  - name: 'php7.0-ldap'
-  - name: 'php7.0-mbstring'
-  - name: 'php7.0-mcrypt'
-  - name: 'php7.0-mysql'
-  - name: 'php7.0-soap'
-  - name: 'php7.0-tidy'
-  - name: 'php7.0-xmlrpc'
-  - name: 'php7.0-zip'
+  - name: 'common'
+  - name: 'cli'
+  - name: 'dev'
+  - name: 'fpm'
+  - name: 'bcmath'
+  - name: 'bz2'
+  - name: 'curl'
+  - name: 'gd'
+  - name: 'imap'
+  - name: 'intl'
+  - name: 'ldap'
+  - name: 'mbstring'
+  - name: 'mcrypt'
+  - name: 'mysql'
+  - name: 'soap'
+  - name: 'tidy'
+  - name: 'xmlrpc'
+  - name: 'zip'
 php_pecl_extensions:
   - name: 'igbinary'
   - name: 'amfext'
@@ -46,6 +47,12 @@ php_cli_ini:
 ## Role Variables
 
 Available variables are listed below, along with default values (see [defaults/main.yml](/defaults/main.yml)):
+
+```
+php_version: '7.0'
+```
+
+The PHP package version you want to install.
 
 ```
 php_ppa:
