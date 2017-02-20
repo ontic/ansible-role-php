@@ -9,6 +9,7 @@
 
 - hosts: 'all'
   vars:
+    php_version: '7.1'
     php_ppa: 'ppa:ondrej/php'
     php_enable_repo: 'epel,webtatic-testing'
     php_repos:

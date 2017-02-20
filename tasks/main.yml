@@ -18,6 +18,18 @@
     - 'configure'
     - 'service'
 
+- name: 'PHP | Define OS-specific PHP version.'
+  set_fact:
+    php_os_version: '{{ php_version | replace(".", "") + "w" if ansible_os_family == "RedHat" else php_version }}'
+  tags:
+    - 'php'
+    - 'php-package'
+    - 'php-configure'
+    - 'php-service'
+    - 'package'
+    - 'configure'
+    - 'service'
+
 - name: 'PHP | Define PHP packages.'
   set_fact:
     php_packages: '{{ php_default_packages }}'

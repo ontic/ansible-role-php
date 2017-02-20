@@ -12,7 +12,7 @@
   service:
     name: '{{ php_web_server_service_name }}'
     state: 'restarted'
-  when: '{{ php_web_server_service_name }}'
+  when: '{{ php_web_server_service_name | default(None) != None }}'
 
 - name: 'restart php-fpm'
   become: yes
