@@ -32,7 +32,7 @@
 - name: 'PHP | Debian | Install PHP packages.'
   become: yes
   apt:
-    name: '{{ php_package_pattern | replace("%version%", php_os_version) | replace("%extension%", item.name) }}{{ "" if item.version is not defined else "=" + item.version }}'
+    name: '{{ item.name if "php-" in item.name else php_package_pattern | replace("%version%", php_os_version) | replace("%extension%", item.name) }}{{ "" if item.version is not defined else "=" + item.version }}'
     cache_valid_time: '{{ item.cache_valid_time | default(omit) }}'
     deb: '{{ item.deb | default(omit) }}'
     default_release: '{{ item.default_release | default(omit) }}'
@@ -52,7 +52,7 @@
 - name: 'PHP | RedHat | Install PHP packages.'
   become: yes
   yum:
-    name: '{{ php_package_pattern | replace("%version%", php_os_version) | replace("%extension%", item.name) }}{{ "" if item.version is not defined else "-" + item.version }}'
+    name: '{{ item.name if "php-" in item.name else php_package_pattern | replace("%version%", php_os_version) | replace("%extension%", item.name) }}{{ "" if item.version is not defined else "-" + item.version }}'
     conf_file: '{{ item.conf_file | default(omit) }}'
     disable_gpg_check: '{{ item.disable_gpg_check | default(omit) }}'
     disablerepo: '{{ item.disablerepo | default(omit) }}'
