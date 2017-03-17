@@ -39,7 +39,6 @@
       - name: 'zip'
       - name: 'php-apcu'
       - name: 'php-geoip'
-      - name: 'php-gettext'
       - name: 'php-igbinary'
       - name: 'php-imagick'
       - name: 'php-xdebug'
