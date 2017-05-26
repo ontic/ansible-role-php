@@ -1,9 +1,5 @@
-# This source file is subject to the (Open Source Initiative) BSD license
-# that is bundled with this package in the LICENSE file. It is also available
-# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
-# If you did not receive a copy of the license and are unable to obtain it through
-# the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) Ontic. (http://www.ontic.com.au). All rights reserved.
+# See the COPYING file bundled with this package for license details.
 
 ---
 
@@ -11,7 +7,7 @@
   command: 'cp {{ php_ini_file }} {{ php_cli_ini_file }}'
   args:
     creates: '{{ php_cli_ini_file }}'
-  when: '{{ ansible_os_family == "RedHat" }}'
+  when: 'ansible_os_family == "RedHat"'
 
 - name: 'PHP | RedHat | Configure global PHP-CLI execution.'
   become: yes
@@ -21,7 +17,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  when: '{{ ansible_os_family == "RedHat" }}'
+  when: 'ansible_os_family == "RedHat"'
 
 - name: 'PHP | Configure absent PHP-FPM pool files.'
   become: yes
@@ -30,7 +26,7 @@
     state: 'absent'
   notify: 'restart php-fpm'
   with_items: '{{ php_fpm_pool_templates }}'
-  when: '{{ php_fpm_pool_templates and item.state | default("present") == "absent" }}'
+  when: 'php_fpm_pool_templates and item.state | default("present") == "absent"'
 
 - name: 'PHP | Configure present PHP-FPM pool files.'
   become: yes
@@ -42,7 +38,7 @@
     mode: '0644'
   notify: 'restart php-fpm'
   with_items: '{{ php_fpm_pool_templates }}'
-  when: '{{ php_fpm_pool_templates and item.state | default("present") == "present" }}'
+  when: 'php_fpm_pool_templates and item.state | default("present") == "present"'
 
 - name: 'PHP | Configure PHP-FPM conf file.'
   become: yes
@@ -53,7 +49,7 @@
     group: 'root'
     mode: '0644'
   notify: 'restart php-fpm'
-  when: '{{ php_fpm_conf_template | default(None) != None }}'
+  when: 'php_fpm_conf_template | default(None) != None'
 
 - name: 'PHP | Configure properties in PHP ini file.'
   become: yes
@@ -70,7 +66,7 @@
     - 'restart php-fpm'
     - 'restart web server'
   with_items: '{{ php_ini }}'
-  when: '{{ php_ini }}'
+  when: 'php_ini'
 
 - name: 'PHP | Configure properties in PHP-CLI ini file.'
   become: yes
@@ -84,4 +80,4 @@
     group: 'root'
     mode: '0644'
   with_items: '{{ php_cli_ini }}'
-  when: '{{ php_cli_ini }}'
+  when: 'php_cli_ini'

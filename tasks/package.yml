@@ -1,9 +1,5 @@
-# This source file is subject to the (Open Source Initiative) BSD license
-# that is bundled with this package in the LICENSE file. It is also available
-# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
-# If you did not receive a copy of the license and are unable to obtain it through
-# the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) Ontic. (http://www.ontic.com.au). All rights reserved.
+# See the COPYING file bundled with this package for license details.
 
 ---
 
@@ -12,7 +8,7 @@
   apt_repository:
     repo: '{{ php_ppa }}'
     update_cache: yes
-  when: '{{ ansible_os_family == "Debian" and php_ppa | default(None) != None }}'
+  when: 'ansible_os_family == "Debian" and php_ppa | default(None) != None'
 
 - name: 'PHP | RedHat | Install repositories.'
   become: yes
@@ -20,14 +16,14 @@
     name: '{{ item.url }}'
     state: '{{ item.state | default(omit) }}'
   with_items: '{{ php_repos }}'
-  when: '{{ ansible_os_family == "RedHat" and php_repos and item.url is defined }}'
+  when: 'ansible_os_family == "RedHat" and php_repos and item.url is defined'
 
 - name: 'PHP | RedHat | Import GPG keys.'
   rpm_key:
     key: '{{ item.key }}'
     state: '{{ item.state | default(omit) }}'
   with_items: '{{ php_repos }}'
-  when: '{{ ansible_os_family == "RedHat" and php_repos and item.key is defined }}'
+  when: 'ansible_os_family == "RedHat" and php_repos and item.key is defined'
 
 - name: 'PHP | Debian | Install PHP packages.'
   become: yes
@@ -47,7 +43,7 @@
     - 'restart php-fpm'
     - 'restart web server'
   with_items: '{{ php_packages }}'
-  when: '{{ ansible_os_family == "Debian" }}'
+  when: 'ansible_os_family == "Debian"'
 
 - name: 'PHP | RedHat | Install PHP packages.'
   become: yes
@@ -65,7 +61,7 @@
     - 'restart php-fpm'
     - 'restart web server'
   with_items: '{{ php_packages }}'
-  when: '{{ ansible_os_family == "RedHat" }}'
+  when: 'ansible_os_family == "RedHat"'
 
 - name: 'PHP | Debian | Install PHP Apache package.'
   become: yes
@@ -75,7 +71,7 @@
   notify:
     - 'restart php-fpm'
     - 'restart web server'
-  when: '{{ ansible_os_family == "Debian" and php_web_server_service_name == "apache2" }}'
+  when: 'ansible_os_family == "Debian" and php_web_server_service_name == "apache2"'
 
 - name: 'PHP | Debian | Install PEAR package.'
   become: yes
@@ -85,7 +81,7 @@
   notify:
     - 'restart php-fpm'
     - 'restart web server'
-  when: '{{ ansible_os_family == "Debian" }}'
+  when: 'ansible_os_family == "Debian"'
 
 - name: 'PHP | RedHat | Install PEAR package.'
   become: yes
@@ -95,15 +91,15 @@
   notify:
     - 'restart php-fpm'
     - 'restart web server'
-  when: '{{ ansible_os_family == "RedHat" }}'
+  when: 'ansible_os_family == "RedHat"'
 
 - name: 'PHP | Install PECL extensions.'
   shell: 'echo yes \"\" | pecl install {{ item.name }}'
   register: 'php_pecl_install'
-  changed_when: '{{ php_pecl_install.stdout.find("already installed") == -1 }}'
-  failed_when: '{{ php_pecl_install.stdout.find("ERROR") != -1 }}'
+  changed_when: 'php_pecl_install.stdout.find("already installed") == -1'
+  failed_when: 'php_pecl_install.stdout.find("ERROR") != -1'
   with_items: '{{ php_pecl_extensions }}'
-  when: '{{ php_pecl_extensions and item.state | default("present") == "present" }}'
+  when: 'php_pecl_extensions and item.state | default("present") == "present"'
   notify:
     - 'restart php-fpm'
     - 'restart web server'
@@ -111,10 +107,10 @@
 - name: 'PHP | Uninstall PECL extensions.'
   shell: 'echo yes \"\" | pecl uninstall {{ item.name }}'
   register: 'php_pecl_uninstall'
-  changed_when: '{{ php_pecl_uninstall.stdout.find("not installed") == -1 }}'
-  failed_when: '{{ php_pecl_uninstall.stdout.find("ERROR") != -1 }}'
+  changed_when: 'php_pecl_uninstall.stdout.find("not installed") == -1'
+  failed_when: 'php_pecl_uninstall.stdout.find("ERROR") != -1'
   with_items: '{{ php_pecl_extensions }}'
-  when: '{{ php_pecl_extensions and item.state | default("present") == "absent" }}'
+  when: 'php_pecl_extensions and item.state | default("present") == "absent"'
   notify:
     - 'restart php-fpm'
     - 'restart web server'
