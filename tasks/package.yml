@@ -3,12 +3,26 @@
 
 ---
 
-- name: 'PHP | Debian | Add launchpad PPA.'
+- name: 'PHP | Debian | Install HTTPS transport.'
+  become: yes
+  apt:
+    name: 'apt-transport-https'
+    state: 'present'
+  when: 'ansible_os_family == "Debian"'
+
+- name: 'PHP | Ubuntu | Add launchpad PPA.'
   become: yes
   apt_repository:
     repo: '{{ php_ppa }}'
     update_cache: yes
-  when: 'ansible_os_family == "Debian" and php_ppa | default(None) != None'
+  when: 'ansible_distribution == "Ubuntu" and php_ppa | default(None) != None'
+
+- name: 'PHP | Debian | Install repository.'
+  become: yes
+  apt_repository:
+    repo: 'deb https://packages.sury.org/php/ {{ ansible_distribution_release | lower }} main'
+    update_cache: yes
+  when: 'ansible_distribution == "Debian"'
 
 - name: 'PHP | RedHat | Install repositories.'
   become: yes
