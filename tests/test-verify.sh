@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Debug
+docker exec --tty ${container_id} env TERM=xterm systemctl status php53-fpm.service
 docker exec --tty ${container_id} env TERM=xterm journalctl -xe
 
 # Verify the installed PHP location.
