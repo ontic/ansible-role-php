@@ -5,13 +5,18 @@
 
 - hosts: 'localhost'
   pre_tasks:
-    - name: 'Install dependencies required by some PHP extensions.'
-      shell: |
-        sudo apt-get install software-properties-common
-        sudo add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty universe'
-        sudo apt-get update
-        sudo apt install mysql-server-5.6
-        sudo apt install mysql-client-5.6
+    - name: 'Add trusty repository containing MySQL 5.6 packages'
+      become: yes
+      apt_repository:
+        repo: 'deb http://archive.ubuntu.com/ubuntu trusty universe'
+        update_cache: yes
+    - name: 'Install MySQL 5.6 server and client packages'
+      become: yes
+      apt:
+        name: '{{ item }}'
+      with_items:
+        - 'mysql-server-5.6'
+        - 'mysql-client-5.6'
   vars:
     php_version: '53'
     php_ppa: 'ppa:sergey-dryabzhinsky/php53'
