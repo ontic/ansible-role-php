@@ -4,6 +4,12 @@
 ---
 
 - hosts: 'localhost'
+  pre_tasks:
+    - name: 'Install dependencies required by some PHP extensions.'
+      apt:
+        name: '{{ item }}'
+      with_items:
+        - 'libmysqlclient18'
   vars:
     php_version: '53'
     php_ppa: 'ppa:sergey-dryabzhinsky/php53'
@@ -18,6 +24,7 @@
       - name: 'mod-dom'
       - name: 'mod-fileinfo'
       - name: 'mod-gd'
+      - name: 'mod-openssl'
       - name: 'mod-imap'
       - name: 'mod-intl'
       - name: 'mod-json'
