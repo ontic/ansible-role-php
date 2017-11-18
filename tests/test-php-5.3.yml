@@ -22,6 +22,7 @@
     php_ppa: 'ppa:sergey-dryabzhinsky/php53'
     php_packages:
       - name: 'common'
+      - name: 'cgi'
       - name: 'cli'
       - name: 'dev'
       - name: 'fpm'
