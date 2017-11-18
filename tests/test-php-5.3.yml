@@ -5,7 +5,7 @@
 
 - hosts: 'localhost'
   vars:
-    php_version: '5.3'
+    php_version: '53'
     php_ppa: 'ppa:sergey-dryabzhinsky/php53'
     php_packages:
       - name: 'common'
