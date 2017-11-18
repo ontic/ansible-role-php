@@ -42,7 +42,7 @@
 - name: 'PHP | Define PHP package pattern.'
   set_fact:
     php_package_pattern: '{{ php_default_package_pattern }}'
-  when: 'not php_package_pattern'
+  when: 'php_package_pattern is not defined'
   tags:
     - 'php'
     - 'php-package'
@@ -55,7 +55,7 @@
 - name: 'PHP | Define PHP FPM service name.'
   set_fact:
     php_fpm_service_name: '{{ php_default_fpm_service_name }}'
-  when: 'not php_fpm_service_name'
+  when: 'php_fpm_service_name is not defined'
   tags:
     - 'php'
     - 'php-package'
@@ -68,7 +68,7 @@
 - name: 'PHP | Define PHP FPM conf file.'
   set_fact:
     php_fpm_conf_file: '{{ php_default_fpm_conf_file }}'
-  when: 'not php_fpm_conf_file'
+  when: 'php_fpm_conf_file is not defined'
   tags:
     - 'php'
     - 'php-package'
@@ -81,7 +81,7 @@
 - name: 'PHP | Define PHP FPM pid file.'
   set_fact:
     php_fpm_pid_file: '{{ php_default_fpm_pid_file }}'
-  when: 'not php_fpm_pid_file'
+  when: 'php_fpm_pid_file is not defined'
   tags:
     - 'php'
     - 'php-package'
@@ -94,7 +94,7 @@
 - name: 'PHP | Define PHP FPM error log.'
   set_fact:
     php_fpm_error_log: '{{ php_default_fpm_error_log }}'
-  when: 'not php_fpm_error_log'
+  when: 'php_fpm_error_log is not defined'
   tags:
     - 'php'
     - 'php-package'
@@ -107,7 +107,7 @@
 - name: 'PHP | Define PHP FPM pool path.'
   set_fact:
     php_fpm_pool_path: '{{ php_default_fpm_pool_path }}'
-  when: 'not php_fpm_pool_path'
+  when: 'php_fpm_pool_path is not defined'
   tags:
     - 'php'
     - 'php-package'
@@ -120,7 +120,7 @@
 - name: 'PHP | Define PHP ini file.'
   set_fact:
     php_ini_file: '{{ php_default_ini_file }}'
-  when: 'not php_ini_file'
+  when: 'php_ini_file is not defined'
   tags:
     - 'php'
     - 'php-package'
@@ -133,7 +133,7 @@
 - name: 'PHP | Define PHP CLI ini file.'
   set_fact:
     php_cli_ini_file: '{{ php_default_cli_ini_file }}'
-  when: 'not php_cli_ini_file'
+  when: 'php_cli_ini_file is not defined'
   tags:
     - 'php'
     - 'php-package'
