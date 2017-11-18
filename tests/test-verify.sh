@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Debug
+docker exec --tty ${container_id} env TERM=xterm journalctl -xe
+
 # Verify the installed PHP location.
 docker exec --tty ${container_id} env TERM=xterm which php
 
