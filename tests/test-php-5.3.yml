@@ -17,6 +17,11 @@
       with_items:
         - 'mysql-server'
         - 'mysql-client'
+    - name: 'Create directory the website directory'
+      file:
+        path: '/var/www/sites/default'
+        state: 'directory'
+        mode: '0755'
   vars:
     php_version: '53'
     php_ppa: 'ppa:sergey-dryabzhinsky/php53'
