@@ -43,5 +43,9 @@
       - name: 'mod-soap'
       - name: 'mod-tidy'
       - name: 'mod-xmlrpc'
+    php_fpm_conf_file: '/etc/php53/fpm/php-fpm.conf'
+    php_fpm_pool_path: '/etc/php53/fpm/pool.d'
+    php_ini_file: '/etc/php53/php.ini'
+    php_cli_ini_file: '/etc/php53/cli/php.ini'
   roles:
     - { role: 'role_under_test' }
