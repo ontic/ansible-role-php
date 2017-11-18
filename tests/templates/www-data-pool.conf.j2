@@ -252,7 +252,7 @@ ping.response = pong
 ; The access log file
 ; Default: not set
 access.log = /var/log/php53-fpm/$pool-access.log
-
+{% raw %}
 ; The access log format.
 ; The following syntax is allowed
 ;  %%: the '%' character
@@ -307,7 +307,7 @@ access.log = /var/log/php53-fpm/$pool-access.log
 ;
 ; Default: "%R - %u %t \"%m %r\" %s"
 ;access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
- 
+{% endraw %}
 ; The log file for slow requests
 ; Default Value: not set
 ; Note: slowlog is mandatory if request_slowlog_timeout is set
