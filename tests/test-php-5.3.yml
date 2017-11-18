@@ -44,6 +44,11 @@
       - name: 'mod-soap'
       - name: 'mod-tidy'
       - name: 'mod-xmlrpc'
+    php_fpm_pool_templates:
+      - name: 'www'
+        state: 'absent'
+      - name: 'www-data'
+        template: 'www-data-pool.conf.j2'
     php_fpm_conf_template:
     php_fpm_service_name: 'php53-fpm'
     php_fpm_conf_file: '/etc/php53/fpm/php-fpm.conf'
