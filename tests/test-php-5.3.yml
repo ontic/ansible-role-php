@@ -1,0 +1,33 @@
+# Copyright (c) Ontic. (http://www.ontic.com.au). All rights reserved.
+# See the COPYING file bundled with this package for license details.
+
+---
+
+- hosts: 'localhost'
+  vars:
+    php_version: '5.3'
+    php_ppa: 'ppa:sergey-dryabzhinsky/php53'
+    php_packages:
+      - name: 'common'
+      - name: 'cli'
+      - name: 'dev'
+      - name: 'fpm'
+      - name: 'mod-bcmath'
+      - name: 'mod-bz2'
+      - name: 'mod-curl'
+      - name: 'mod-dom'
+      - name: 'mod-fileinfo'
+      - name: 'mod-gd'
+      - name: 'mod-imap'
+      - name: 'mod-intl'
+      - name: 'mod-json'
+      - name: 'mod-ldap'
+      - name: 'mod-mbstring'
+      - name: 'mod-mcrypt'
+      - name: 'mod-mysql'
+      - name: 'mod-simplexml'
+      - name: 'mod-soap'
+      - name: 'mod-tidy'
+      - name: 'mod-xmlrpc'
+  roles:
+    - { role: 'role_under_test' }
