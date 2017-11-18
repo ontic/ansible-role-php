@@ -5,12 +5,12 @@
 
 - hosts: 'localhost'
   pre_tasks:
-    - name: 'Add trusty repository containing MySQL 5.6 packages'
+    - name: 'Add trusty repository containing MySQL 5.5 packages'
       become: yes
       apt_repository:
-        repo: 'deb http://archive.ubuntu.com/ubuntu trusty universe'
+        repo: 'ppa:sergey-dryabzhinsky/packages'
         update_cache: yes
-    - name: 'Install MySQL 5.6 server and client packages'
+    - name: 'Install MySQL 5.5 server and client packages'
       become: yes
       apt:
         name: '{{ item }}'
