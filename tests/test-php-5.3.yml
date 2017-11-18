@@ -15,7 +15,8 @@
       apt:
         name: '{{ item }}'
       with_items:
-        - 'mysql-5.5'
+        - 'mysql-server'
+        - 'mysql-client'
   vars:
     php_version: '53'
     php_ppa: 'ppa:sergey-dryabzhinsky/php53'
