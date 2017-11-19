@@ -3,6 +3,20 @@
 
 ---
 
+- name: 'PHP | Check PHP FPM service flag existence.'
+  become: yes
+  stat:
+    path: '/etc/default/{{ php_fpm_service_name }}'
+  register: 'php_service_flag'
+
+- name: 'PHP | Enable PHP FPM service flag.'
+  become: yes
+  lineinfile:
+    dest: '/etc/default/{{ php_fpm_service_name }}'
+    regexp: '^#\s*ENABLE=true.*$'
+    line: 'ENABLE=true'
+  when: 'php_service_flag.stat.exists != False'
+
 - name: 'PHP | Enable PHP FPM service.'
   become: yes
   service:

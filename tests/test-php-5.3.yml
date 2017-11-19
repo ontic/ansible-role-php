@@ -5,7 +5,7 @@
 
 - hosts: 'localhost'
   pre_tasks:
-    - name: 'Add trusty repository containing MySQL 5.5 packages'
+    - name: 'Add repository containing additional packages.'
       become: yes
       apt_repository:
         repo: 'ppa:sergey-dryabzhinsky/packages'
@@ -17,7 +17,7 @@
       with_items:
         - 'mysql-server'
         - 'mysql-client'
-    - name: 'Create directory the website directory'
+    - name: 'Create the website directory.'
       file:
         path: '/var/www/sites/default'
         state: 'directory'
@@ -55,7 +55,6 @@
       - name: 'www-data'
         template: 'www-data-pool.conf.j2'
     php_fpm_conf_template:
-    php_package_pattern: 'php%version%p-%extension%'
     php_fpm_service_name: 'php53-fpm'
     php_fpm_conf_file: '/etc/php53/fpm/php-fpm.conf'
     php_fpm_pid_file: '/var/run/php53-fpm.pid'
