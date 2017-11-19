@@ -55,6 +55,7 @@
       - name: 'www-data'
         template: 'www-data-pool.conf.j2'
     php_fpm_conf_template:
+    php_package_pattern: 'php%version%p-%extension%'
     php_fpm_service_name: 'php53-fpm'
     php_fpm_conf_file: '/etc/php53/fpm/php-fpm.conf'
     php_fpm_pid_file: '/var/run/php53-fpm.pid'
