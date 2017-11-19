@@ -12,6 +12,7 @@
 - name: 'PHP | Enable PHP FPM service flag.'
   become: yes
   lineinfile:
+    backrefs: yes
     dest: '/etc/default/{{ php_fpm_service_name }}'
     regexp: '^#\s*ENABLE=true.*$'
     line: 'ENABLE=true'
