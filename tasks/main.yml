@@ -39,6 +39,19 @@
     - 'configure'
     - 'service'
 
+- name: 'PHP | Define PHP PEAR package name.'
+  set_fact:
+    php_pear_package_name: 'php-pear'
+  when: 'not php_pear_package_name'
+  tags:
+    - 'php'
+    - 'php-package'
+    - 'php-configure'
+    - 'php-service'
+    - 'package'
+    - 'configure'
+    - 'service'
+
 - name: 'PHP | Define PHP package pattern.'
   set_fact:
     php_package_pattern: '{{ php_default_package_pattern }}'
