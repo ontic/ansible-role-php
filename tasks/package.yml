@@ -98,7 +98,7 @@
 - name: 'PHP | Debian | Install PEAR package.'
   become: yes
   apt:
-    name: 'php-pear'
+    name: '{{ php_pear_package_name }}'
     state: '{{ php_pecl_extensions | ternary("present", "absent") }}'
   notify:
     - 'restart php-fpm'
