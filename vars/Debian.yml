@@ -16,10 +16,12 @@ php_default_packages:
   - name: 'intl'
   - name: 'ldap'
   - name: 'mbstring'
-  - name: 'mcrypt'
   - name: 'mysql'
+  - name: 'opcache'
   - name: 'soap'
+  - name: 'sqlite3'
   - name: 'tidy'
+  - name: 'xml'
   - name: 'xmlrpc'
   - name: 'zip'
 

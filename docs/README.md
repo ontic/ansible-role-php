@@ -3,7 +3,7 @@
 ## Example
 
 ```
-php_version: '7.1'
+php_version: '7.2'
 php_ppa: 'ppa:ondrej/php'
 php_fpm_conf_template: 'example.com.php-fpm.conf.j2'
 php_fpm_pool_templates:
@@ -24,12 +24,21 @@ php_packages:
   - name: 'intl'
   - name: 'ldap'
   - name: 'mbstring'
-  - name: 'mcrypt'
   - name: 'mysql'
+  - name: 'opcache'
   - name: 'soap'
+  - name: 'sqlite3'
   - name: 'tidy'
+  - name: 'xml'
   - name: 'xmlrpc'
   - name: 'zip'
+  - name: 'php-apcu'
+  - name: 'php-geoip'
+  - name: 'php-igbinary'
+  - name: 'php-imagick'
+  - name: 'php-redis'
+  - name: 'php-uuid'
+  - name: 'php-xdebug'
 php_pecl_extensions:
   - name: 'igbinary'
   - name: 'amfext'

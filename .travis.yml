@@ -15,6 +15,8 @@ env:
   - distribution: 'ubuntu'
     version: '16.04'
     playbook: 'test-php-5.3.yml'
+  - distribution: 'ubuntu'
+    version: '18.04'
 
 before_install:
   - 'export container_id=$(date +%s)'

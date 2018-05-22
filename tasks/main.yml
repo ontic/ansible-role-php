@@ -156,19 +156,19 @@
     - 'configure'
     - 'service'
 
-- include: 'package.yml'
+- import_tasks: 'package.yml'
   tags:
     - 'php'
     - 'php-package'
     - 'package'
 
-- include: 'configure.yml'
+- import_tasks: 'configure.yml'
   tags:
     - 'php'
     - 'php-configure'
     - 'configure'
 
-- include: 'service.yml'
+- import_tasks: 'service.yml'
   tags:
     - 'php'
     - 'php-service'

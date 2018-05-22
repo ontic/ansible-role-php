@@ -14,7 +14,6 @@ php_default_packages:
   - name: 'intl'
   - name: 'ldap'
   - name: 'mbstring'
-  - name: 'mcrypt'
   - name: 'opcache'
   - name: 'pdo'
   - name: 'soap'
