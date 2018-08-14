@@ -24,3 +24,4 @@
     name: '{{ php_fpm_service_name }}'
     state: '{{ php_fpm_service_state }}'
     enabled: '{{ php_fpm_service_enabled }}'
+  when: 'php_service_flag.stat.exists != False'
