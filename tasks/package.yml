@@ -116,6 +116,7 @@
   when: 'ansible_os_family == "RedHat"'
 
 - name: 'PHP | Install PECL extensions.'
+  become: yes
   shell: 'echo yes \"\" | pecl install {{ item.name }}'
   register: 'php_pecl_install'
   changed_when: 'php_pecl_install.stdout.find("already installed") == -1'
@@ -127,6 +128,7 @@
     - 'restart web server'
 
 - name: 'PHP | Uninstall PECL extensions.'
+  become: yes
   shell: 'echo yes \"\" | pecl uninstall {{ item.name }}'
   register: 'php_pecl_uninstall'
   changed_when: 'php_pecl_uninstall.stdout.find("not installed") == -1'
